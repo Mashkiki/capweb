@@ -70,3 +70,18 @@ let player = {
 najważniejsze jest jakie pety gracz ma equippnięte, nie mam pojęcia (na razie) w jaki sposób to przechować i jak wszystko sprawdzać, raczej największe wyzwanie na start
 
 projekt GUI ci pokaże kiedyś na dc
+
+
+[Rendering]
+1. Create crystal object
+    a) Set area and other properties
+    b) *Set width and height depending on the crystal's size
+
+2. Append the crystal to a respective area
+
+3. Create a rendering pipeline
+    a) gameWindow already takes care of the animation cycle, so no need to figure that out
+    b) Create a loop. Loop through the area's crystals object/array to find every crystal that should be on the map
+    c) For every crystal that is in that object/array, draw a rectangle in a *safe spot on the canvas
+    d)
+    x) Check for changes in the area's crystals object

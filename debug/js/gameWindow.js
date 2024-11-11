@@ -1,23 +1,11 @@
-let gameWindow = document.getElementById("gameWindow");
-let ctx = gameWindow.getContext("2d");
-
 let cameraOffset = {
-  x: gameWindow.offsetWidth / 2,
-  y: gameWindow.offsetHeight / 2,
+  x: gameWindow.offsetWidth / 2 - 500,
+  y: gameWindow.offsetHeight / 2 - 150,
 };
-let cameraZoom = 1;
+let cameraZoom = 0.75;
 const MAX_ZOOM = 5;
 const MIN_ZOOM = 0.1;
 const SCROLL_SENSITIVITY = 0.0005;
-
-let cobblestonePattern = ctx.createPattern(
-  document.getElementById("cobblestoneImage"),
-  "repeat",
-);
-let spawnGrassPattern = ctx.createPattern(
-  document.getElementById("spawnGrassImage"),
-  "repeat",
-);
 
 function draw() {
   gameWindow.width = gameWindow.offsetWidth;
@@ -31,23 +19,12 @@ function draw() {
   );
   ctx.clearRect(0, 0, gameWindow.offsetWidth, gameWindow.offsetHeight);
 
-  ctx.fillStyle = cobblestonePattern;
-  drawRect(-100500, 0, 100000, 1000);
-  drawRect(500, 0, 100000, 1000);
-  drawRect(-100500, -100000, 201000, 100000);
-  drawRect(-100500, 1000, 201000, 100000);
-  ctx.fillStyle = spawnGrassPattern;
-  drawRect(-500, 0, 1000, 1000);
+  renderAreaWalls()
+  renderArea()
 
   requestAnimationFrame(draw);
 }
-function drawRect(x, y, width, height) {
-  ctx.fillRect(x, y, width, height);
-}
-function drawText(text, x, y, size, font) {
-  ctx.font = `${size}px ${font}`;
-  ctx.fillText(text, x, y);
-}
+
 
 function getEventLocation(e) {
   if (e.touches && e.touches.length == 1) {
@@ -73,7 +50,12 @@ function onPointerUp(e) {
 function onPointerMove(e) {
   if (isDragging) {
     cameraOffset.x = getEventLocation(e).x / cameraZoom - dragStart.x;
+    cameraOffset.x = Math.min(cameraOffset.x, areaPanningBounds.x.min);
+    cameraOffset.x = Math.max(cameraOffset.x, areaPanningBounds.x.max);
+
     cameraOffset.y = getEventLocation(e).y / cameraZoom - dragStart.y;
+    cameraOffset.y = Math.min(cameraOffset.y, areaPanningBounds.y.min);
+    cameraOffset.y = Math.max(cameraOffset.y, areaPanningBounds.y.max);
   }
 }
 function handleTouch(e, singleTouchHandler) {
@@ -115,8 +97,6 @@ function adjustZoom(zoomAmount, zoomFactor) {
 
     cameraZoom = Math.min(cameraZoom, MAX_ZOOM);
     cameraZoom = Math.max(cameraZoom, MIN_ZOOM);
-
-    console.log(zoomAmount);
   }
 }
 

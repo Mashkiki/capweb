@@ -20,7 +20,7 @@ header > h1 {
     font-family: "Fredoka";
     font-style: normal;
     font-weight: 600;
-    src: url("../fonts/Fredoka-SemiBold.ttf");
+    src: url("../fonts/FredokaOne-Regular.ttf");
 }
 
 html {
@@ -42,23 +42,32 @@ header {
 
 main {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
 }
 #gameWindow {
-    width: 95%;
-    height: 95%;
+    width: 95%; height: 80%;
+    margin-top: 5%;
     border-radius: 24px;
     box-shadow: 0 0 12px black;
-    background-image: url("../resources/cobblestone.png");
+    background: #2a2a2a;
+}
+#gameControlCenter {
+    display: flex;
+    flex-direction: row;
+    width: 100%; height: 15%;
+
+    justify-content: center;
+    align-items: center;
+}
+#gameControlCenter > h1 {
+    display: block;
+    height: fit-content;
+    transform: scale(2);
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
     display: block;
     width: fit-content;
     margin: 0;
