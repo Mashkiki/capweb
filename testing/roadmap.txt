@@ -85,9 +85,3 @@ projekt GUI ci pokaże kiedyś na dc
     c) For every crystal that is in that object/array, draw a rectangle in a *safe spot on the canvas
     d)
     x) Check for changes in the area's crystals object
-
-------------------
-czyli jak juz zrobisz smiecia (kryształa)
-to wypierdalasz jego zajete komórki z mozliwosci renderowania
-wiec
-nie bedzie sie mogl renderowac w tym samym miejsku
