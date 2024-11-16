@@ -10,22 +10,34 @@
     </head>
     <body>
         <header>
-            <h1 class="fredoka white-text black-text-outline">Collect All Pets!</h1>
+            <h3 class="fredoka white-text black-text-outline">Collect All Pets!</h3>
         </header>
         <main>
-            <div id="gameWindow">
-                <div id="gameWindowContent"></div>
-            </div>
-            <div id="gameControlCenter">
-                <h1 class="fredoka white-text black-text-outline">&LT;  Spawn  &GT;</h1>
-            </div>
-        </main>
-        <aside></aside>
+            <section id="game">
+                <div id="gameWindow">
+                    <div id="gameWindowContent"></div>
+                </div>
+                <div id="controlCenterWrapper">
+                    <div id="gameControlCenter">
+                        <div id="previousAreaButton" class="area-button-disabled"><h2 class="fredoka white-text black-text-outline">&LT;</h2></div>
+                        <div id="changeAreaButton" class="area-button-disabled" data-area="0"><h2 class="fredoka white-text black-text-outline">0: Spawn</h2></div>
+                        <div id="nextAreaButton" class="area-button-enabled"><h2 class="fredoka white-text black-text-outline">&GT;</h2></div>
+                    </div>
+                </div>
+            </section>
 
-        <script src="js/player.js"></script>           <!-- First load the player                     -->
-        <script src="js/crystals.js"></script>         <!-- Then the different crystals               -->
+        </main>
+        <aside>
+            <section id="resourceDisplay"></section>
+            <section id="gameNavigation"></section>
+        </aside>
+
+        <script src="js/crystals.js"></script>         <!-- Load different crystals                   -->
         <script src="js/areas.js"></script>            <!-- Pass the crystals to the areas            -->
         <script src="js/render.js"></script>           <!-- And both the crystals and areas to render -->
+        <script src="js/pets.js"></script>             <!--                                           -->
+        <script src="js/player.js"></script>           <!-- After the game is loaded, let it play     -->
+        <script src="js/game.js"></script>             <!--                                           -->
         <script src="js/gameWindow.js"></script>       <!-- Finally, handle drawing the game window   -->
     </body>
 </html>

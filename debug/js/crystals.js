@@ -50,13 +50,26 @@ let crystalSet = {
     L: { hp: 15_000_000_000 },
   },
 };
+let crystalSizes = {
+  S: {width: 1, height: 1},
+  M: {width: 2, height: 2},
+  L: {width: 2, height: 3}
+}
+let crystalImages = {
+  S: "assets/resources/small_crystal.png",
+  M: "assets/resources/medium_crystal.png",
+  L: "assets/resources/large_crystal.png"
+}
+let areaCrystalFilter = {
+  Meadow: "hue-rotate(60deg) brightness(120%) contrast(175%)"
+}
 
 class Crystal {
   constructor(area, size, hp) {
     this.area = area;
     this.size = size;
     this.hp = hp;
+    this.gridCoordinates = new Object()
+    this.attackedBy = new Array()
   }
-  attackedBy = [];
-  canvasCoordinates = [];
 }

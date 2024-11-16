@@ -1,11 +1,8 @@
-renderArea()
-renderAreaWalls()
-
 let cameraOffset = {
   x: gameWindow.scrollLeftMax,
   y: gameWindow.scrollTopMax,
 };
-let cameraZoom = 1;
+let cameraZoom = 0.8;
 const MAX_ZOOM = 5;
 const MIN_ZOOM = 0.1;
 const SCROLL_SENSITIVITY = 0.0005;
@@ -36,11 +33,14 @@ function onPointerUp(e) {
 function onPointerMove(e) {
   if (isDragging) {
     cameraOffset.x = getEventLocation(e).x - dragStart.x;
-    cameraOffset.x = Math.min(Math.max(cameraOffset.x, Math.max(gameWindowContent.offsetWidth - gameWindowContent.offsetWidth * cameraZoom, 0)), gameWindow.scrollLeftMax);
-
     cameraOffset.y = getEventLocation(e).y - dragStart.y;
-    cameraOffset.y = Math.min(Math.max(cameraOffset.y, Math.max(gameWindowContent.offsetHeight - gameWindowContent.offsetHeight * cameraZoom, 0)), gameWindow.scrollTopMax);
+
+    fixCameraOffset()
   }
+}
+function fixCameraOffset() {
+  cameraOffset.x = Math.min(Math.max(cameraOffset.x, Math.max(gameWindowContent.offsetWidth - gameWindowContent.offsetWidth * cameraZoom, 0)), gameWindow.scrollLeftMax);
+  cameraOffset.y = Math.min(Math.max(cameraOffset.y, Math.max(gameWindowContent.offsetHeight - gameWindowContent.offsetHeight * cameraZoom, 0)), gameWindow.scrollTopMax);
 }
 function adjustZoom(zoomAmount, zoomFactor) {
   if (!isDragging) {
@@ -52,6 +52,7 @@ function adjustZoom(zoomAmount, zoomFactor) {
 
     cameraZoom = Math.min(cameraZoom, MAX_ZOOM);
     cameraZoom = Math.max(cameraZoom, MIN_ZOOM);
+    fixCameraOffset()
   }
 }
 

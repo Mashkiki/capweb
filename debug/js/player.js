@@ -12,5 +12,6 @@ let player = {
       titanium: {},
     },
   },
+  unlocked_areas: ["Spawn", "Meadow"],
   titanium_ingots: 0,
 };
