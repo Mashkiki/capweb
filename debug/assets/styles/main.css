@@ -140,7 +140,6 @@ main {
     background-color: #73B0FF;
     border: 2px solid #1F3146;
     border-radius: 12px;
-    text-decoration: line-through #464646 5px;
     user-select: none;
 }
 #filterPetInventoryButton:hover {
@@ -214,6 +213,7 @@ main {
     width: 100%;
     display: grid;
     grid-template: 1fr / repeat(2, 1fr);
+    user-select: none;
 }
 .pet-inventory-tab-button {
     position: relative;
@@ -222,6 +222,7 @@ main {
     justify-content: center;
     align-items: center;
 }
+.pet-inventory-tab-button:hover {cursor: pointer;}
 .pet-inventory-tab-button-active::after {
   content: "";
   display: inline-block;
@@ -235,25 +236,83 @@ main {
 }
 #equipTab {
     display: grid;
-    grid-template: 70% 30% / 100%;
+    grid-template: 70% 30% / 50% 50%;
 }
 #equippedPets {
+    grid-area: 1/1 / 2/3;
     margin-top: 0.75rem;
     overflow: scroll;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template: repeat(3, 1fr) / repeat(4, 1fr);
     gap: 0.25rem;
     color: #464646;
     font-size: 12px;
 }
 .equipped-pet-slot {
-    background-color: #DEDEDE;
-    width: 3.5rem; aspect-ratio: 1/1;
+    font-size: 18px;
+    width: 3.8rem; aspect-ratio: 1/1;
     margin: auto;
     border-radius: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+.equipped-pet-slot.unlocked-pet-slot {
+    position: relative;
+    color: #464646;
+    background-color: #DEDEDE;
+}
+.equipped-pet-slot.unlocked-pet-slot::before {
+    content: "Empty";
+}
+.equipped-pet-slot.locked-pet-slot {
+    position: relative;
+    background-color: #A5A5A5;
+}
+.equipped-pet-slot.locked-pet-slot::before {
+    filter: invert(30%) sepia(0%) saturate(907%) hue-rotate(142deg) brightness(86%) contrast(94%);
+    width: 50%; height: fit-content;
+    content: url("../resources/lock-solid.svg");
+}
+#premiumPetSlots {
+    grid-area: 3/3 / 4/5;
+    display: grid;
+    grid-template: 1fr / repeat(2, 1fr);
+    gap: 0.25rem;
+}
+.locked-premium-pet-slots {
+    background-color: #6AFFBA;
+    border: 2px solid #1C4632;
+    border-radius: 0.75rem;
+    padding: 0.25rem;
+}
+.locked-premium-pet-slots:hover {background-color: #4AB382; cursor: pointer;}
+.locked-premium-pet-slots:active {background-color: #97FFCF;}
 .equipped-pet-slot-premium {
-
+    font-size: 18px;
+    width: 3.8rem; aspect-ratio: 1/1;
+    margin: auto;
+    border-radius: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.equipped-pet-slot-premium.unlocked-pet-slot {
+    position: relative;
+    color: #464646;
+    background-color: #DEDEDE;
+}
+.equipped-pet-slot-premium.unlocked-pet-slot::before {
+    content: "Empty";
+}
+.equipped-pet-slot-premium.locked-pet-slot {
+    position: relative;
+    background-color: #A5A5A5;
+}
+.equipped-pet-slot-premium.locked-pet-slot::before {
+    filter: invert(30%) sepia(0%) saturate(907%) hue-rotate(142deg) brightness(86%) contrast(94%);
+    width: 50%; height: fit-content;
+    content: url("../resources/lock-solid.svg");
 }
 
 aside {
@@ -273,6 +332,7 @@ aside {
     user-select: none;
 }
 .navigation-button {
+    position: relative;
     height: 3rem;
     width: 100%;
     margin-bottom: 0.5rem;
@@ -283,6 +343,17 @@ aside {
 }
 .navigation-button:hover {
     cursor: pointer;
+}
+.active-tab-navigation-button::after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  left: -21px;
+  height: 100%; width: 6px;
+  background-color: #F4FF7B;
+  border: 2px solid #464646;
+  border-radius: 4px;
+  z-index: 100;
 }
 #navigationGame {
     background-color: #F0F0F0;

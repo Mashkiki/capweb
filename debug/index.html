@@ -40,31 +40,41 @@
                     </div>
                     <div id="petInventoryRight">
                         <div id="petInventoryTabChooser">
-                            <div id="equipTabButton" class="pet-inventory-tab-button pet-inventory-tab-button-active">
+                            <div id="equipTabButton" class="pet-inventory-tab-button pet-inventory-tab-button-active" data-href="equipTab">
                                 <h6 class="fredoka white-text black-text-outline">Equip</h6>
                             </div>
-                            <div id="fuseTabButton" class="pet-inventory-tab-button">
+                            <div id="fuseTabButton" class="pet-inventory-tab-button" data-href="fuseTab">
                                 <h6 class="fredoka white-text black-text-outline">Fuse</h6>
                             </div>
                         </div>
 
-                        <div id="equipTab">
-                            <div id="equippedPets">
-                                <div class="equipped-pet-slot"></div>
-                                <div class="equipped-pet-slot"></div>
-                                <div class="equipped-pet-slot"></div>
-                                <div class="equipped-pet-slot"></div>
-                                <div class="equipped-pet-slot"></div>
-                                <div class="equipped-pet-slot"></div>
-                                <div class="equipped-pet-slot"></div>
-                                <div class="equipped-pet-slot"></div>
-                                <div class="equipped-pet-slot"></div>
-                                <div class="equipped-pet-slot"></div>
-                                <div class="equipped-pet-slot"></div>
-                                <div class="equipped-pet-slot"></div>
-                                <div class="equipped-pet-slot-premium"></div>
-                                <div class="equipped-pet-slot-premium"></div>
+                        <div id="equipTab" class="active-pet-inventory-tab">
+                            <div id="equippedPets" class="fredoka">
+                                <div class="equipped-pet-slot unlocked-pet-slot"></div>
+                                <div class="equipped-pet-slot unlocked-pet-slot"></div>
+                                <div class="equipped-pet-slot unlocked-pet-slot"></div>
+                                <div class="equipped-pet-slot unlocked-pet-slot"></div>
+                                <div class="equipped-pet-slot locked-pet-slot"></div>
+                                <div class="equipped-pet-slot locked-pet-slot"></div>
+                                <div class="equipped-pet-slot locked-pet-slot"></div>
+                                <div class="equipped-pet-slot locked-pet-slot"></div>
+                                <div class="equipped-pet-slot locked-pet-slot"></div>
+                                <div class="equipped-pet-slot locked-pet-slot"></div>
+                                <div id="premiumPetSlots" class="locked-premium-pet-slots">
+                                    <div class="equipped-pet-slot-premium locked-pet-slot"></div>
+                                    <div class="equipped-pet-slot-premium locked-pet-slot"></div>
+                                </div>
                             </div>
+
+                            <div id="equipTabLeft">
+
+                            </div>
+                            <div id="equipTabRight">
+
+                            </div>
+                        </div>
+                        <div id="fuseTab">
+
                         </div>
                     </div>
                 </div>
@@ -76,10 +86,10 @@
                 <div id="goldPerSecond"></div>
             </section>
             <section id="gameNavigation">
-                <div class="navigation-button" id="navigationGame" data-href="gameTab" data-name="Game">
-                    <h1 class="fredoka white-text black-text-outline">&GT; Game &LT;</h1>
+                <div class="navigation-button active-tab-navigation-button" id="navigationGame" data-href="gameTab">
+                    <h1 class="fredoka white-text black-text-outline">Game</h1>
                 </div>
-                <div class="navigation-button" id="navigationInventory" data-href="inventoryTab" data-name="Inventory">
+                <div class="navigation-button" id="navigationInventory" data-href="inventoryTab">
                     <h1 class="fredoka white-text black-text-outline">Inventory</h1>
                 </div>
             </section>

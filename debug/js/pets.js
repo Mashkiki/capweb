@@ -63,3 +63,23 @@ function addPetToInventory(pet) {
   player.inventory.pets.push(pet)
   createPetElement(pet)
 }
+
+let petInventoryNavigationButtons = document.querySelectorAll(".pet-inventory-tab-button")
+function changePetInventoryTab(tab) {
+  let activePetInventoryTab = document.querySelector(".active-pet-inventory-tab")
+  activePetInventoryTab.style.display = "none"
+  activePetInventoryTab.classList.remove("active-pet-inventory-tab")
+  let newPetInventoryTab = document.getElementById(tab)
+  newPetInventoryTab.style = ""
+  newPetInventoryTab.classList.add("active-pet-inventory-tab")
+
+  let activePetInventoryTabNavigationButton = document.querySelector(`div[data-href="${activePetInventoryTab.id}"]`)
+  activePetInventoryTabNavigationButton.classList.remove("pet-inventory-tab-button-active")
+  let newPetInventoryTabNavigationButton = document.querySelector(`div[data-href="${newPetInventoryTab.id}"]`)
+  newPetInventoryTabNavigationButton.classList.add("pet-inventory-tab-button-active")
+}
+for (i = 0; i < petInventoryNavigationButtons.length; i++) {
+  let navButton = petInventoryNavigationButtons[i]
+  let href = navButton.getAttribute("data-href")
+  navButton.addEventListener("click", () => {changePetInventoryTab(href)})
+}

@@ -21,7 +21,7 @@ function createCrystal(area) {
 function createCrystalsForArea(chosenArea) {
   let result = createCrystal(chosenArea)
   if (result) {
-    setTimeout(() => {createCrystalsForArea(chosenArea)}, 1500)
+    setTimeout(() => {createCrystalsForArea(chosenArea)}, 300)
   }
 }
 
@@ -113,9 +113,9 @@ function changeTab(tab) {
   newTab.classList.add("active-tab")
 
   let activeTabNavigationButton = document.querySelector(`div[data-href="${activeTab.id}"]`)
-  activeTabNavigationButton.querySelector("h1").innerText = `${activeTabNavigationButton.getAttribute("data-name")}`
+  activeTabNavigationButton.classList.remove("active-tab-navigation-button")
   let newTabNavigationButton = document.querySelector(`div[data-href="${newTab.id}"]`)
-  newTabNavigationButton.querySelector("h1").innerText = `> ${newTabNavigationButton.getAttribute("data-name")} <`
+  newTabNavigationButton.classList.add("active-tab-navigation-button")
 }
 for (i = 0; i < navigationButtons.length; i++) {
   let navButton = navigationButtons[i]
