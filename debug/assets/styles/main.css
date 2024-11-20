@@ -36,7 +36,7 @@ header {
 main {
     grid-area: 2 / 1;
 }
-#game {
+#gameTab {
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -61,6 +61,11 @@ main {
 }
 #gameWindowContent > *:active {cursor: grabbing;}
 #gameWindowContent > * > * {cursor: default;}
+.crystal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 #gameControlCenter {
     display: grid;
@@ -99,6 +104,158 @@ main {
     cursor: not-allowed;
 }
 
+#inventoryTab {
+    height: 100%;
+    font-size: 1.6rem;
+    padding-inline: 1rem;
+    overflow: scroll;
+}
+#petInventoryContainer {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    height: 24rem;
+    margin-block: 0.5rem;
+    padding-block: 0.5rem; padding-inline: 1rem;
+    background-color: #F4F4F4;
+    border: 3px solid #464646;
+    border-radius: 32px;
+}
+#petInventoryHeading {
+    position: absolute;
+    left: 50%; top: 0.25rem;
+    transform: translateX(-50%);
+}
+#petInventoryTopBar {
+    display: flex;
+    flex-flow: row nowrap;
+    margin-block: 0.5rem; margin-inline: 0.75rem;
+}
+#filterPetInventoryButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    padding-inline: 0.5rem; padding-block: 0.25rem;
+    background-color: #73B0FF;
+    border: 2px solid #1F3146;
+    border-radius: 12px;
+    text-decoration: line-through #464646 5px;
+    user-select: none;
+}
+#filterPetInventoryButton:hover {
+    background-color: #507BB3;
+    cursor: pointer;
+}
+#filterPetInventoryButton:active {
+    background-color: #9DC8FF;
+}
+#petsShown {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 1rem;
+}
+#petInventory {
+    display: grid;
+    grid-template: 5rem / repeat(4, 4.8rem);
+    gap: 0.25rem;
+    width: fit-content; max-height: 60%;
+    overflow: scroll;
+    user-select: none;
+    padding: 0.5rem;
+    background-color: #DCDCDC;
+    border-radius: 28px;
+}
+.pet-element {
+    background-color: #F0F0F0;
+    border: 2px solid #464646;
+    border-radius: 16px;
+    padding: 0.25rem;
+    aspect-ratio: 1/1;
+}
+.pet-element:hover {
+    cursor: pointer;
+}
+.pet-element-equipped {
+    background-image: linear-gradient(rgb(0 0 0/20%) 0 0);
+}
+.pet-name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; height: 80%;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    text-wrap: wrap;
+}
+.pet-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; height: 20%;
+}
+.pet-rarity {
+    color: #464646;
+    font-size: 12px;
+}
+.pet-damage {
+    color: #FFCACB;
+    font-size: 14px;
+}
+#petInventoryRight {
+    width: min(40%, 20rem);
+    padding-top: 1rem;
+    display: grid;
+    grid-template: 3rem 1fr / 1fr;
+}
+#petInventoryTabChooser {
+    width: 100%;
+    display: grid;
+    grid-template: 1fr / repeat(2, 1fr);
+}
+.pet-inventory-tab-button {
+    position: relative;
+    border-bottom: 2px solid #dcdcdc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.pet-inventory-tab-button-active::after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  bottom: -8px;
+  width: 100%; height: 10px;
+  background-color: #F4FF7B;
+  border: 2px solid #464646;
+  border-radius: 4px;
+  z-index: 100;
+}
+#equipTab {
+    display: grid;
+    grid-template: 70% 30% / 100%;
+}
+#equippedPets {
+    margin-top: 0.75rem;
+    overflow: scroll;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.25rem;
+    color: #464646;
+    font-size: 12px;
+}
+.equipped-pet-slot {
+    background-color: #DEDEDE;
+    width: 3.5rem; aspect-ratio: 1/1;
+    margin: auto;
+    border-radius: 0.5rem;
+}
+.equipped-pet-slot-premium {
+
+}
+
 aside {
     grid-row: 1/3;
     border-left: 2px solid #dcdcdc;
@@ -108,6 +265,37 @@ aside {
 #resourceDisplay {
     border-bottom: 2px solid #dcdcdc;
 }
+#gameNavigation {
+    font-size: 1.5rem;
+    display: flex;
+    flex-flow: column nowrap;
+    padding: 0.5rem;
+    user-select: none;
+}
+.navigation-button {
+    height: 3rem;
+    width: 100%;
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.75rem;
+}
+.navigation-button:hover {
+    cursor: pointer;
+}
+#navigationGame {
+    background-color: #F0F0F0;
+    border: 3px solid #464646;
+}
+#navigationGame:hover  {background-color: #bababa;}
+#navigationGame:active {background-color: #ffffff;}
+#navigationInventory {
+    background-color: #6AFFBA;
+    border: 3px solid #1C4632;
+}
+#navigationInventory:hover  {background-color: #4AB382;}
+#navigationInventory:active {background-color: #97FFCF;}
 
 h1, h2, h3, h4, h5, h6 {
     display: block;
@@ -123,9 +311,14 @@ h1, h2, h3, h4, h5, h6 {
     font-style: normal;
     font-variation-settings: "wdth" 100;
 }
+
 .white-text {
     color: white;
 }
+.lilac-text {
+    color: #DDD7FF;
+}
+
 .black-text-outline {
     text-shadow:
         -2px -2px 0 #000,
@@ -134,11 +327,36 @@ h1, h2, h3, h4, h5, h6 {
         -2px 2px 0 #000,
         0px 2px 0 #000,
         2px 2px 0 #000,
-        0px 0px 2px #000,
-        0px 0px 2px #000,
-        0px 0px 2px #000,
-        0px 0px 2px #000,
-        0px 0px 2px #000,
-        0px 0px 2px #000,
-        0px 0px 2px #000;
+        -2px 0px 0 #000,
+        2px 0px 0 #000;
+}
+.gray-text-outline {
+    text-shadow:
+        -2px -2px 0 #464646,
+        0px -2px 0 #464646,
+        2px -2px 0 #464646,
+        -2px 2px 0 #464646,
+        0px 2px 0 #464646,
+        2px 2px 0 #464646,
+        -2px 0px 0 #464646,
+        2px 0px 0 #464646;
+}
+.thick-dark-violet-text-outline {
+    text-shadow:
+        -2px -2px 0 #3C3B46,
+        0 -2px 0 #3C3B46,
+        2px -2px 0 #3C3B46,
+        2px 0 0 #3C3B46,
+        2px 2px 0 #3C3B46,
+        0 2px 0 #3C3B46,
+        -2px 2px 0 #3C3B46,
+        -2px 0 0 #3C3B46,
+        -4px -4px 0 #3C3B46,
+        0 -4px 0 #3C3B46,
+        4px -4px 0 #3C3B46,
+        4px 0 0 #3C3B46,
+        4px 4px 0 #3C3B46,
+        0 4px 0 #3C3B46,
+        -4px 4px 0 #3C3B46,
+        -4px 0 0 #3C3B46;
 }

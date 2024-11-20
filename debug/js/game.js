@@ -103,4 +103,24 @@ function changeArea(newArea) {
   createCrystalsForArea(newArea)
 }
 
+let navigationButtons = document.querySelectorAll(".navigation-button")
+function changeTab(tab) {
+  let activeTab = document.querySelector(".active-tab")
+  activeTab.style.display = "none"
+  activeTab.classList.remove("active-tab")
+  let newTab = document.getElementById(tab)
+  newTab.style = ""
+  newTab.classList.add("active-tab")
+
+  let activeTabNavigationButton = document.querySelector(`div[data-href="${activeTab.id}"]`)
+  activeTabNavigationButton.querySelector("h1").innerText = `${activeTabNavigationButton.getAttribute("data-name")}`
+  let newTabNavigationButton = document.querySelector(`div[data-href="${newTab.id}"]`)
+  newTabNavigationButton.querySelector("h1").innerText = `> ${newTabNavigationButton.getAttribute("data-name")} <`
+}
+for (i = 0; i < navigationButtons.length; i++) {
+  let navButton = navigationButtons[i]
+  let href = navButton.getAttribute("data-href")
+  navButton.addEventListener("click", () => {changeTab(href)})
+}
+
 startGame()

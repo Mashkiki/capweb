@@ -11,9 +11,11 @@ function drawRect(x, y, width, height) {
 
   return newElement
 }
-function drawText(text, x, y, size, font) {
-  ctx.font = `${size}px ${font}`;
-  ctx.fillText(text, x, y);
+function drawText(text, size) {
+  let textElement = document.createElement("p")
+  textElement.innerText = text
+  textElement.style.fontSize = `${size}px`
+  return textElement
 }
 
 let currentArea = "Spawn"
@@ -73,6 +75,15 @@ function createCrystalElement(rowStart, columnStart, rowEnd, columnEnd) {
   crystalElement.style.backgroundRepeat = "no-repeat"
   return crystalElement
 }
+function createCrystalPetAmountElement(crystalObject) {
+  // let petAmount = crystalObject["attackedBy"].length
+  let petAmountText = drawText("", crystalSizes[crystalObject.size].height * 20)
+  petAmountText.classList.add("fredoka")
+  petAmountText.classList.add("white-text")
+  petAmountText.classList.add("black-text-outline")
+  let crystalElement = document.getElementById(`${crystalObject.area}x${crystalObject.gridCoordinates.x}y${crystalObject.gridCoordinates.y}`)
+  crystalElement.appendChild(petAmountText)
+}
 function growAnimation(crystal, element) {
   let animationTime = crystalSizes[crystal.size].height * 0.5
   element.style.backgroundPosition = `0 ${crystalSizes[crystal.size].height * 50}px`
@@ -124,10 +135,12 @@ function renderCrystal(crystal) {
   }
   let crystalElement = createCrystalElement(randomRow, randomColumn, randomRow + crystalHeight, randomColumn + crystalWidth)
   crystalElement.id = `${crystal.area}x${randomColumn}y${randomRow}`
+  crystalElement.className = "crystal"
   crystal.gridCoordinates.x = randomColumn
   crystal.gridCoordinates.y = randomRow
   crystalElement.style.filter = areaCrystalFilter[crystal.area]
   growAnimation(crystal, crystalElement)
   document.getElementById(crystal.area.toLowerCase() + "Surface").appendChild(crystalElement)
+  createCrystalPetAmountElement(crystal)
   return rendered;
 }

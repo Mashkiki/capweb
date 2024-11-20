@@ -2,7 +2,8 @@ let player = {
   gold: 0,
   rebirth_stones: 0,
   inventory: {
-    pets: {},
+    max_pets: 500,
+    pets: [],
     shiny_skins: {},
     metallic_skins: {
       chrome: {},

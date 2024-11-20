@@ -13,7 +13,7 @@
             <h3 class="fredoka white-text black-text-outline">Collect All Pets!</h3>
         </header>
         <main>
-            <section id="game">
+            <section id="gameTab" class="active-tab">
                 <div id="gameWindow">
                     <div id="gameWindowContent"></div>
                 </div>
@@ -26,10 +26,63 @@
                 </div>
             </section>
 
+            <section id="inventoryTab">
+                <h1 class="fredoka white-text black-text-outline">Inventory</h1>
+                <div id="petInventoryContainer">
+                    <h1 id="petInventoryHeading" class="fredoka lilac-text thick-dark-violet-text-outline">Pets</h1>
+                    <div id="petInventoryLeft">
+                        <div id="petInventoryTopBar">
+                            <div id="filterPetInventoryButton"><h5 class="fredoka white-text gray-text-outline">Filter</h5></div>
+                            <div id="petsShown"><h6 class="fredoka white-text black-text-outline">0 / 0 pets shown</h6></div>
+                        </div>
+
+                        <div id="petInventory"></div>
+                    </div>
+                    <div id="petInventoryRight">
+                        <div id="petInventoryTabChooser">
+                            <div id="equipTabButton" class="pet-inventory-tab-button pet-inventory-tab-button-active">
+                                <h6 class="fredoka white-text black-text-outline">Equip</h6>
+                            </div>
+                            <div id="fuseTabButton" class="pet-inventory-tab-button">
+                                <h6 class="fredoka white-text black-text-outline">Fuse</h6>
+                            </div>
+                        </div>
+
+                        <div id="equipTab">
+                            <div id="equippedPets">
+                                <div class="equipped-pet-slot"></div>
+                                <div class="equipped-pet-slot"></div>
+                                <div class="equipped-pet-slot"></div>
+                                <div class="equipped-pet-slot"></div>
+                                <div class="equipped-pet-slot"></div>
+                                <div class="equipped-pet-slot"></div>
+                                <div class="equipped-pet-slot"></div>
+                                <div class="equipped-pet-slot"></div>
+                                <div class="equipped-pet-slot"></div>
+                                <div class="equipped-pet-slot"></div>
+                                <div class="equipped-pet-slot"></div>
+                                <div class="equipped-pet-slot"></div>
+                                <div class="equipped-pet-slot-premium"></div>
+                                <div class="equipped-pet-slot-premium"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </main>
         <aside>
-            <section id="resourceDisplay"></section>
-            <section id="gameNavigation"></section>
+            <section id="resourceDisplay">
+                <div id="goldDisplay"></div>
+                <div id="goldPerSecond"></div>
+            </section>
+            <section id="gameNavigation">
+                <div class="navigation-button" id="navigationGame" data-href="gameTab" data-name="Game">
+                    <h1 class="fredoka white-text black-text-outline">&GT; Game &LT;</h1>
+                </div>
+                <div class="navigation-button" id="navigationInventory" data-href="inventoryTab" data-name="Inventory">
+                    <h1 class="fredoka white-text black-text-outline">Inventory</h1>
+                </div>
+            </section>
         </aside>
 
         <script src="js/crystals.js"></script>         <!-- Load different crystals                   -->
