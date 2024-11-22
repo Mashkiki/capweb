@@ -96,3 +96,8 @@ nie bedzie sie mogl renderowac w tym samym miejsku
 jak się zmienia area to się robi czarny ekran
 podczas szczytu animacji zachodzi zmiana area
 jak sie zmieni (czyli delay 500ms) to znika czarny ekran
+
+
+---------------------------------
+
+zrobic zeby tryskanie sperma i dodac denisa zaleckiego do gry, najlepiej wyjebac krysztaly i zrobic cwągle bo fajnie czołpek
