@@ -39,7 +39,7 @@ function areaControlButtonStatusUpdate() {
     previousAreaButton.className = "area-button-enabled"
     nextAreaButton.className = "area-button-disabled"
   } else {
-    previousAreaButton.className = "area-button-enabled"
+    previousAreaButton.className = "rea-button-enabled"
     nextAreaButton.className = "area-button-enabled"
   }
   if (areaArray[currentChangeArea] == currentArea) {
