@@ -66,10 +66,12 @@ let areaCrystalFilter = {
 
 class Crystal {
   constructor(area, size, hp) {
+    this.id = player.crystals_destroyed
     this.area = area;
     this.size = size;
     this.hp = hp;
     this.gridCoordinates = new Object()
     this.attackedBy = new Array()
+    player.crystals_destroyed++
   }
 }

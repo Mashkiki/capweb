@@ -87,7 +87,7 @@ function createCrystalPetAmountElement(crystalObject) {
 function growAnimation(crystal, element) {
   let animationTime = crystalSizes[crystal.size].height * 0.5
   element.style.backgroundPosition = `0 ${crystalSizes[crystal.size].height * 50}px`
-  element.style.transition = `background-position ${animationTime}s ease`
+  element.style.transition = `${animationTime}s ease`
   setTimeout(() => {element.style.backgroundPosition = `0 0`}, 100)
 }
 function renderCrystal(crystal) {

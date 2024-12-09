@@ -35,7 +35,6 @@
                             <div id="filterPetInventoryButton"><h5 class="fredoka white-text gray-text-outline">Filter</h5></div>
                             <div id="petsShown"><h6 class="fredoka white-text gray-text-outline">0 / 0 pets shown</h6></div>
                         </div>
-
                         <div id="petInventory"></div>
                     </div>
                     <div id="petInventoryRight">
@@ -50,19 +49,19 @@
 
                         <div id="equipTab" class="active-pet-inventory-tab">
                             <div id="equippedPets" class="fredoka">
-                                <div class="equipped-pet-slot unlocked-pet-slot"></div>
-                                <div class="equipped-pet-slot unlocked-pet-slot"></div>
-                                <div class="equipped-pet-slot unlocked-pet-slot"></div>
-                                <div class="equipped-pet-slot unlocked-pet-slot"></div>
-                                <div class="equipped-pet-slot locked-pet-slot"></div>
-                                <div class="equipped-pet-slot locked-pet-slot"></div>
-                                <div class="equipped-pet-slot locked-pet-slot"></div>
-                                <div class="equipped-pet-slot locked-pet-slot"></div>
-                                <div class="equipped-pet-slot locked-pet-slot"></div>
-                                <div class="equipped-pet-slot locked-pet-slot"></div>
+                                <div id="petSlot1" class="equipped-pet-slot unlocked-pet-slot"></div>
+                                <div id="petSlot2"  class="equipped-pet-slot unlocked-pet-slot"></div>
+                                <div id="petSlot3"  class="equipped-pet-slot unlocked-pet-slot"></div>
+                                <div id="petSlot4"  class="equipped-pet-slot unlocked-pet-slot"></div>
+                                <div id="petSlot5"  class="equipped-pet-slot locked-pet-slot"></div>
+                                <div id="petSlot6"  class="equipped-pet-slot locked-pet-slot"></div>
+                                <div id="petSlot7"  class="equipped-pet-slot locked-pet-slot"></div>
+                                <div id="petSlot8"  class="equipped-pet-slot locked-pet-slot"></div>
+                                <div id="petSlot9"  class="equipped-pet-slot locked-pet-slot"></div>
+                                <div id="petSlot10"  class="equipped-pet-slot locked-pet-slot"></div>
                                 <div id="premiumPetSlots" class="locked-premium-pet-slots">
-                                    <div class="equipped-pet-slot-premium locked-pet-slot"></div>
-                                    <div class="equipped-pet-slot-premium locked-pet-slot"></div>
+                                    <div id="petSlot11" class="equipped-pet-slot-premium locked-pet-slot"></div>
+                                    <div id="petSlot12" class="equipped-pet-slot-premium locked-pet-slot"></div>
                                 </div>
                             </div>
 
@@ -105,11 +104,11 @@
             </section>
         </aside>
 
+        <script src="js/player.js"></script>           <!--                                           -->
         <script src="js/crystals.js"></script>         <!-- Load different crystals                   -->
         <script src="js/areas.js"></script>            <!-- Pass the crystals to the areas            -->
         <script src="js/render.js"></script>           <!-- And both the crystals and areas to render -->
-        <script src="js/pets.js"></script>             <!--                                           -->
-        <script src="js/player.js"></script>           <!-- After the game is loaded, let it play     -->
+        <script src="js/pets.js"></script>             <!-- After the game is loaded, let it play     -->
         <script src="js/game.js"></script>             <!--                                           -->
         <script src="js/gameWindow.js"></script>       <!-- Finally, handle drawing the game window   -->
     </body>

@@ -64,7 +64,7 @@ function generateCrystalObject(specifiedArea) {
     return;
   }
   if (Areas[specifiedArea]["activeCrystals"].length >= Areas[specifiedArea].maxCrystals) {
-    console.error("Error while generating crystal. Area already has maximum crystals active.\nError code: 13");
+    // console.error("Error while generating crystal. Area already has maximum crystals active.\nError code: 13");
     return;
   }
 
@@ -72,6 +72,6 @@ function generateCrystalObject(specifiedArea) {
   let newCrystalSize = POSSIBLE_CRYSTAL_SIZES[Math.floor(Math.random() * POSSIBLE_CRYSTAL_SIZES.length)];
   let newCrystal = new Crystal(specifiedArea, newCrystalSize, crystalSet[specifiedArea][newCrystalSize].hp)
 
-  console.log("Crystal finished generation successfully.");
+  // console.log("Crystal finished generation successfully.");
   return newCrystal
 }

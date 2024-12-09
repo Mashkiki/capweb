@@ -11,6 +11,10 @@ let pets = {
     "Donkey", "Mule", "Horse", "Meerkat", "Monkey", "Sloth",
     "Koala", "Tiger", "Armadillo", "Camel", "Owl", "Canary",
     "Albino Canary", "Baby Union", "Water Dino", "Red Dino", "Mushroom", "Senior Shroom"
+  ],
+  Uncommon: [
+    "Fox", "Red Panda", "Panther", "Leopard", "Snow Leopard", "Cow",
+    "Black Sheep", "Black Llama", "White Llama", "Skunk", "Alpine Ibex", "White Pony"
   ]
 }
 let defaultPetDamage = {
@@ -23,45 +27,12 @@ let defaultPetDamage = {
 }
 class Pet {
   constructor(rarity) {
+    this.id = player.inventory.total_pets
     this.rarity = rarity
-    this.petid = Math.floor(Math.random() * pets[this.rarity].length)
-    this.name = pets[this.rarity][this.petid]
+    this.name = pets[this.rarity][Math.floor(Math.random() * pets[this.rarity].length)]
+    this.equipped = false
+    player.inventory.total_pets++
   }
-}
-
-let petInventory = document.querySelector("#petInventory")
-function createPetElement(pet) {
-  let petElement = document.createElement("div")
-  let petName = document.createElement("div")
-  let petNameText = document.createElement("p")
-  let petInfo = document.createElement("div")
-  let petRarity = document.createElement("p")
-  let petDamage = document.createElement("p")
-  petElement.className = "pet-element"
-  petName.className = "pet-name"
-  petNameText.className = "fredoka black-text-outline"
-  petInfo.className = "pet-info"
-  petRarity.className = "fredoka pet-rarity"
-  petDamage.className = "fredoka black-text-outline pet-damage"
-
-  petNameText.innerText = pet.name
-  petRarity.innerText = pet.rarity
-  petDamage.innerText = defaultPetDamage["base"][pet.rarity]
-
-  petInfo.appendChild(petRarity)
-  petInfo.appendChild(petDamage)
-  petName.appendChild(petNameText)
-  petElement.appendChild(petName)
-  petElement.appendChild(petInfo)
-  petInventory.appendChild(petElement)
-}
-function addPetToInventory(pet) {
-  if (player.inventory.pets.length >= player.inventory.max_pets) {
-    // Max pets reached. If the function was somehow called after reaching that limit, don't continue.
-    return
-  }
-  player.inventory.pets.push(pet)
-  createPetElement(pet)
 }
 
 let petInventoryNavigationButtons = document.querySelectorAll(".pet-inventory-tab-button")
