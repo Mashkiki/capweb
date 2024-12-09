@@ -1,2 +1,2 @@
-# jebać koniare
+# jebać koniare on skibidi
 
