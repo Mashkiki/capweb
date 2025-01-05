@@ -1,2 +1,2 @@
-# jebać koniare on skibidi
+# collect all pets (really)
 
