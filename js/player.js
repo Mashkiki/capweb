@@ -1,5 +1,7 @@
-let player = {
-  gold: 750,
+let player = {} // empty object
+let playerDefaults = {
+  gold: 1000,
+  pet_score: 0,
   rebirth_stones: 0,
   rebirth_count: 0,
   crystals_destroyed: 0,
@@ -38,6 +40,7 @@ let player = {
     11: { unlocked: false, pet: null, crystal: null },
     12: { unlocked: false, pet: null, crystal: null },
   },
+  discovered_pets: [],
   premium_pet_slots: false,
   egg_prices: "base",
 };

@@ -7,14 +7,32 @@ let pets = {
     "Labrador", "Dalmatian", "Snow Cat", "Brown Cat", "Snow Bunny", "Hare",
     "Chipmunk", "Squirrel", "Orange Squirrel", "Porcupine", "Possum", "Otter",
     "Deer", "Pig", "Boar", "Mole", "Chick", "Baby Ducky",
-    "Duck", "Platypus", "Chicken", "Sheep", "Ram", "Goat",
+    "Duck", "Platypus", "Chicken", "Sheep", "Pink Ram", "Goat",
     "Donkey", "Mule", "Horse", "Meerkat", "Monkey", "Sloth",
     "Koala", "Tiger", "Armadillo", "Camel", "Owl", "Canary",
-    "Albino Canary", "Baby Union", "Water Dino", "Red Dino", "Mushroom", "Senior Shroom"
+    "Emo Bird", "Baby Planta", "Aqua Dino", "Red Dino", "Mushroom", "Senior Shroom"
   ],
   Uncommon: [
-    "Fox", "Red Panda", "Panther", "Leopard", "Snow Leopard", "Cow",
-    "Black Sheep", "Black Llama", "White Llama", "Skunk", "Alpine Ibex", "White Pony"
+    "Fox", "Red Panda", "Panther", "Leopard", "Siberian Tiger", "Cow",
+    "Black Sheep", "Black Llama", "White Llama", "Skunk", "Mountain Goat", "White Pony",
+    "Sand Camel", "Pangolin", "Tapir", "Dune Armadillo", "Baby Elephant", "Salamander",
+    "Orange Salamander", "Chameleon", "Cool Chameleon", "Arctic Monkey", "Penguin", "Snow Owl",
+    "Angry Hatchling", "Water Hatchling", "Planta", "Sweet Turnip", "Sour Turnip", "Bitter Turnip",
+    "Spikey", "Ram", "Beaver", "Chunky Cat", "Spikey Shroom", "Brown Shroom",
+    "Shadow Shroom", "Stressed Bird", "Demon Bird", "Terra Dino", "Starry Dino", "Springy Dragonette",
+    "Fire Dragonette", "Greedy Dragonette", "Springy Unicorn", "Ethereal Unicorn", "Graceful Unicorn", "Swift Unicorn"
+  ],
+  Rare: [
+    "Lion", "Lioness", "Wolf Pup", "Raccoon", "Wise Owl", "Snow Leopard",
+    "Zebra", "Brown Bear", "Bull", "Bison", "Baby Buffalo", "Elephant",
+    "Hippo", "Elk", "Anteater", "Ostrich", "Flamingo", "Kangaroo",
+    "Fluffy", "Turtle", "Baby Crab", "Ruby Shellfish", "Emerald Shellfish", "Amethyst Shellfish",
+    "Baby Octopus", "Cheery Nawhal", "Curious Narwhal", "Dizzy Narwhal", "Chill Penguin", "Honey Bee",
+    "Baby Spider", "Angelic Spirit", "Wayward Spirit", "Evil Spirit", "Possessed Spirit", "Fireling",
+    "Lava Shroom", "Ghostly Shroom", "Shroom Stumpy", "Vintage Stumpy", "Senior Planta", "Outcast Planta",
+    "Karate Cactus", "Vibing Cactus", "Spikey Moomoo", "Aquatic Moomoo", "Spotted Hamster", "Ice Cream Hamster",
+    "Dizzy Hamster", "Baby Hamster", "Fiendish Hatchling", "Wired Hatchling", "Ghostly Hatchling", "Hazey Dragonette",
+    "Froggy Dragonette", "Yinyang Dragonette", "Fairy Unicorn", "Gallant Unicorn", "Radiant Unicorn", "Shamrock Unicorn"
   ]
 }
 let defaultPetDamage = {
@@ -31,28 +49,9 @@ class Pet {
     this.rarity = rarity
     this.name = pets[this.rarity][Math.floor(Math.random() * pets[this.rarity].length)]
     this.equipped = false
+    this.inMerge = false
     player.inventory.total_pets++
   }
-}
-
-let petInventoryNavigationButtons = document.querySelectorAll(".pet-inventory-tab-button")
-function changePetInventoryTab(tab) {
-  let activePetInventoryTab = document.querySelector(".active-pet-inventory-tab")
-  activePetInventoryTab.style.display = "none"
-  activePetInventoryTab.classList.remove("active-pet-inventory-tab")
-  let newPetInventoryTab = document.getElementById(tab)
-  newPetInventoryTab.style = ""
-  newPetInventoryTab.classList.add("active-pet-inventory-tab")
-
-  let activePetInventoryTabNavigationButton = document.querySelector(`div[data-href="${activePetInventoryTab.id}"]`)
-  activePetInventoryTabNavigationButton.classList.remove("pet-inventory-tab-button-active")
-  let newPetInventoryTabNavigationButton = document.querySelector(`div[data-href="${newPetInventoryTab.id}"]`)
-  newPetInventoryTabNavigationButton.classList.add("pet-inventory-tab-button-active")
-}
-for (i = 0; i < petInventoryNavigationButtons.length; i++) {
-  let navButton = petInventoryNavigationButtons[i]
-  let href = navButton.getAttribute("data-href")
-  navButton.addEventListener("click", () => {changePetInventoryTab(href)})
 }
 
 let eggs = {

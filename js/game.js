@@ -4,6 +4,8 @@ function startGame() {
   renderArea()
   renderAreaWalls()
 }
+load()
+startGame()
 
 function createCrystal(area) {
   let newCrystal = generateCrystalObject(area)
@@ -28,7 +30,6 @@ function createCrystalsForArea(chosenArea) {
 let previousAreaButton = document.querySelector("#previousAreaButton")
 let changeAreaButton = document.querySelector("#changeAreaButton")
 let changeAreaButtonText = changeAreaButton.querySelector("h2")
-console.log
 let nextAreaButton = document.querySelector("#nextAreaButton")
 function areaControlButtonStatusUpdate() {
   let currentChangeArea = changeAreaButton.getAttribute("data-area")
@@ -50,7 +51,20 @@ function areaControlButtonStatusUpdate() {
   if (player.unlocked_areas.includes(areaArray[currentChangeArea])) {
     changeAreaButtonText.innerText = `${currentChangeArea}: ${areaArray[currentChangeArea]}`
   } else {
-    changeAreaButtonText.innerText = `${currentChangeArea}: Locked`
+    let areaRequirement = ""
+    let areaRequirementAmount = ""
+    if (Areas[areaArray[currentChangeArea]].requirementAmount == 0) {
+      areaRequirementAmount = ""
+    } else {
+      areaRequirementAmount = `${Areas[areaArray[currentChangeArea]].requirementAmount} `
+    }
+    areaRequirement += areaRequirementAmount
+    let areaRequirementType = Areas[areaArray[currentChangeArea]].requirementType.split("_")
+    areaRequirementType.forEach((element) => {
+      areaRequirement += element.substring(0, 1).toUpperCase()
+    })
+
+    changeAreaButtonText.innerText = `${currentChangeArea}: Locked (${areaRequirement})`
     changeAreaButton.className = "area-button-disabled"
   }
 }
@@ -136,11 +150,12 @@ function createPetElement(pet) {
   let petDamage = document.createElement("p")
   petElement.className = "pet-element"
   petElement.classList.add(`${(pet.rarity).toLowerCase()}-pet`)
-  petElement.setAttribute("data-petid", pet["id"])
+  petElement.dataset.petName = pet.name
+  petElement.dataset.petid = pet.id
   petName.className = "pet-name"
   petNameText.className = "fredoka black-text-outline"
   petInfo.className = "pet-info"
-  petRarity.className = "fredoka pet-rarity"
+  petRarity.className = `fredoka ${(pet.rarity).toLowerCase()}-pet-rarity`
   petDamage.className = "fredoka black-text-outline pet-damage"
 
   petNameText.innerText = pet.name
@@ -256,15 +271,22 @@ function equipBestPets() { // AI made this :(
     equipBestPetsDB = false
   }, 500)
 }
-document.getElementById("equipBestPetsButton").addEventListener("click", () => { equipBestPets(); equipBestPets() })
+document.getElementById("equipBestPetsButton").addEventListener("click", () => {
+  equipBestPets()
+  setTimeout(() => {
+    equipBestPets()
+    equipBestPetsDB = true
+  }, 100)
+})
 function addPetToInventory(pet) {
   if (player.inventory.pets.length >= player.inventory.max_pets) {
     // Max pets reached. If the function was somehow called after reaching that limit, don't continue.
     return
   }
   player.inventory.pets.push(pet)
+  discoverPet(pet.name)
   let petElement = createPetElement(pet)
-  petElement.addEventListener("click", () => { equipPet(pet) })
+  petElement.addEventListener("click", () => { clickPetElement(pet) })
 }
 
 let petsEquipped = document.querySelector("#petsEquipped")
@@ -284,16 +306,69 @@ function updatePetsEquipped() {
   petsEquipped.innerText = `${equippedPets} / ${unlockedPetSlots} equipped`
 }
 let petsShown = document.querySelector("#petsShown > h6")
+function getShownPets() {
+  let petElements = petInventory.querySelectorAll(".pet-element")
+  let shownPets = 0
+  for (let i = 0; i < petElements.length; i++) {
+    if (petElements[i].style.display == "unset") {
+      shownPets++
+    }
+  }
+  return shownPets
+}
 function updatePetsShown() {
-  // let shownPets = getShownPets()
-  let shownPets = player.inventory.pets.length
+  let shownPets = getShownPets()
   let totalPets = player.inventory.pets.length
   petsShown.innerText = `${shownPets} / ${totalPets} pets shown`
+}
+
+let petInventoryNavigationButtons = document.querySelectorAll(".pet-inventory-tab-button")
+let petInventoryMode = "equip"
+function changePetInventoryTab(tab) {
+  let activePetInventoryTab = document.querySelector(".active-pet-inventory-tab")
+  activePetInventoryTab.style.display = "none"
+  activePetInventoryTab.classList.remove("active-pet-inventory-tab")
+  let newPetInventoryTab = document.getElementById(tab)
+  newPetInventoryTab.style = ""
+  newPetInventoryTab.classList.add("active-pet-inventory-tab")
+  let newPetInventoryMode = newPetInventoryTab.id.replace("Tab", "")
+  petInventoryMode = newPetInventoryMode
+
+  let activePetInventoryTabNavigationButton = document.querySelector(`div[data-href="${activePetInventoryTab.id}"]`)
+  activePetInventoryTabNavigationButton.classList.remove("pet-inventory-tab-button-active")
+  let newPetInventoryTabNavigationButton = document.querySelector(`div[data-href="${newPetInventoryTab.id}"]`)
+  newPetInventoryTabNavigationButton.classList.add("pet-inventory-tab-button-active")
+}
+for (i = 0; i < petInventoryNavigationButtons.length; i++) {
+  let navButton = petInventoryNavigationButtons[i]
+  let href = navButton.getAttribute("data-href")
+  navButton.addEventListener("click", () => {changePetInventoryTab(href)})
+}
+
+const petOrderMap = {}
+let petOrderIndex = 1
+for (let rarity in pets) {
+  pets[rarity].forEach((petName, index) => {
+    petOrderMap[petName] = petOrderIndex
+    petOrderIndex++
+  })
+}
+function reorderPetInventory() {
+  let petElements = petInventory.querySelectorAll(".pet-element")
+
+  petElements.forEach(petElement => {
+    const petName = petElement.dataset.petName
+    if (petOrderMap[petName] !== undefined) {
+      petElement.style.order = petOrderMap[petName]
+    }
+  })
 }
 
 function updatePetInventory() {
   updatePetsEquipped()
   updatePetsShown()
+  reorderPetInventory()
+  filterPetInventory()
   setTimeout(updatePetInventory, 400)
 }
 updatePetInventory()
@@ -537,6 +612,10 @@ function updateEggPriceDisplay() {
 }
 updateEggPriceDisplay()
 function openEgg(rarity) {
+  if (player.inventory.pets.length >= player.inventory.max_pets) {
+    // Max pets reached.
+    return
+  }
   if (!eggs[rarity]) {
     return
   }
@@ -572,8 +651,20 @@ function openEgg(rarity) {
     hatchedRarityText.innerText = rarity
     darken.appendChild(hatchedRarityText)
 
+    let hatchIcons = document.createElement("div")
+    hatchIcons.style = `display: flex; flex-flow: row-reverse nowrap; width: fit-content; height: 2rem; position: fixed; right: 0.5rem; bottom: 0.5rem;`
+    darken.appendChild(hatchIcons)
+
+    if (!player.discovered_pets.includes(hatchedPet.name)) {
+      let discoveryIcon = document.createElement("img")
+      discoveryIcon.src = "assets/resources/discovery.svg"
+      discoveryIcon.alt = "New pet discovered"
+      discoveryIcon.style = `height: 100%; aspect-ratio: 1/1`
+      hatchIcons.appendChild(discoveryIcon)
+    }
+
     addPetToInventory(hatchedPet)
-  }, 3800 / player.stats.egg_hatch_speed)
+  }, 3500 / player.stats.egg_hatch_speed)
 }
 for (let i = 0; i < eggButtons.length; i++) {
   let rarity = String(eggButtons[i].id).replace("Egg", "")
@@ -586,4 +677,318 @@ for (let i = 0; i < eggButtons.length; i++) {
   })
 }
 
-startGame()
+function showSavingNotification() {
+  let notification = document.createElement("div")
+  notification.className = "saving-game-notification fredoka white-text black-text-outline"
+  notification.innerText = "Saving game..."
+  document.body.appendChild(notification)
+  setTimeout(() => {
+    notification.style.left = "0.5rem"
+  }, 100)
+  setTimeout(() => {
+    notification.style.opacity = 0
+  }, 3000)
+  setTimeout(() => {
+    notification.remove()
+  }, 3500)
+}
+
+function save() {
+  let compressedSave = btoa(JSON.stringify(player))
+  localStorage.setItem("capwebsave1", compressedSave)
+  showSavingNotification()
+
+  setTimeout(save, 30_000)
+}
+function load() {
+  setTimeout(() => {
+    generateIndexItems()
+  }, 1000)
+  setTimeout(save, 10_000)
+
+  let compressedSave = localStorage.getItem("capwebsave1")
+  if (!compressedSave) {
+    player = playerDefaults
+    return
+  }
+  let saveFile = JSON.parse(atob(compressedSave))
+  let loadedSave = {...playerDefaults, ...saveFile}
+  player = loadedSave
+
+  // (hopefully) temporary fix to equipped_pets on load
+  player.equipped_pets = playerDefaults.equipped_pets
+  player.inventory.pets.forEach((element) => {
+    element["equipped"] = false
+  })
+
+  // Fix pet inventory
+  setTimeout(() => {
+    player.inventory.pets.forEach((element) => {
+      let petElement = createPetElement(element)
+      petElement.addEventListener("click", () => { clickPetElement(element) })
+    })
+    equipBestPets()
+  }, 200)
+}
+
+document.body.addEventListener("unload", save)
+
+let petIndexNavigationButtons = document.querySelectorAll(".pet-index-tab-button")
+function changePetIndexTab(tab) {
+  let activePetIndexTab = document.querySelector(".active-pet-index-tab")
+  activePetIndexTab.style.display = "none"
+  activePetIndexTab.classList.remove("active-pet-index-tab")
+  let newPetIndexTab = document.getElementById(tab)
+  newPetIndexTab.style = ""
+  newPetIndexTab.classList.add("active-pet-index-tab")
+
+  let activePetIndexTabNavigationButton = document.querySelector(`div[data-href="${activePetIndexTab.id}"]`)
+  activePetIndexTabNavigationButton.classList.remove("pet-index-tab-button-active")
+  let newPetIndexTabNavigationButton = document.querySelector(`div[data-href="${newPetIndexTab.id}"]`)
+  newPetIndexTabNavigationButton.classList.add("pet-index-tab-button-active")
+}
+for (i = 0; i < petIndexNavigationButtons.length; i++) {
+  let navButton = petIndexNavigationButtons[i]
+  let href = navButton.getAttribute("data-href")
+  navButton.addEventListener("click", () => {changePetIndexTab(href)})
+}
+
+function createNormalPetIndexElement(rarity, petName) {
+  let normalPetIndexElement = document.createElement("div")
+  normalPetIndexElement.className = `normal-pet-index-item locked-normal-pet-index-item fredoka ${(rarity).toLowerCase()}-pet`
+  normalPetIndexElement.setAttribute("data-petname", petName)
+  normalPetIndex.appendChild(normalPetIndexElement)
+
+  let petNameElement = document.createElement("div")
+  let petNameText = document.createElement("p")
+  let petRarity = document.createElement("p")
+  petNameElement.className = "pet-name"
+  petNameText.className = "fredoka black-text-outline"
+  petRarity.className = `fredoka ${(rarity).toLowerCase()}-pet-rarity`
+
+  petNameText.innerText = petName
+  petRarity.innerText = rarity
+
+  petNameElement.appendChild(petNameText)
+  normalPetIndexElement.appendChild(petNameElement)
+  normalPetIndexElement.appendChild(petRarity)
+  return normalPetIndexElement
+}
+function generateIndexItems() {
+  // Normal pet index
+  let normalPetIndex = document.querySelector("#normalPetIndex")
+  for (let rarity in pets) {
+    pets[rarity].forEach((element) => {
+      let normalPetIndexElement = createNormalPetIndexElement(rarity, element)
+      normalPetIndex.appendChild(normalPetIndexElement)
+    })
+  }
+  updatePetIndex()
+}
+
+function discoverPet(petName) {
+  if (player.discovered_pets.includes(petName)) {
+    return
+  }
+  player.discovered_pets.push(petName)
+}
+function updatePetScore() {
+  // Get mythical pet count (from inventory)
+  let mythicalPetsCollectedNumber = document.querySelector("#mythicalPetsCollected")
+  let mythicalPetsCollected = 0
+  mythicalPetsCollectedNumber.innerText = mythicalPetsCollected
+
+  // Count discovered pets
+  let petsDiscoveredNumber = document.querySelector("#petsDiscovered")
+  let petsDiscovered = 0
+  player.discovered_pets.forEach(() => {petsDiscovered++})
+  petsDiscoveredNumber.innerText = petsDiscovered
+
+  // Add together
+  let petScoreNumber = document.querySelector("#petScoreNumber")
+  let totalPetScore = mythicalPetsCollected + petsDiscovered
+  player.pet_score = totalPetScore
+  petScoreNumber.innerText = totalPetScore
+}
+function updatePetIndex() {
+  // Normal pet index
+  let normalPetIndex = document.querySelector("#normalPetIndex")
+  let normalPetIndexItems = normalPetIndex.querySelectorAll(".normal-pet-index-item")
+  for (let i = 0; i < normalPetIndexItems.length; i++) {
+    if (player.discovered_pets.includes(normalPetIndexItems[i].getAttribute("data-petname"))) {
+      normalPetIndexItems[i].classList.remove("locked-normal-pet-index-item")
+    }
+  }
+
+  updatePetScore()
+  setTimeout(updatePetIndex, 2500)
+}
+
+function unlockArea(areaName) {
+  if (player.unlocked_areas.includes(areaName)) {
+    return
+  }
+  player.unlocked_areas.push(areaName)
+  let currentChangeArea = changeAreaButton.getAttribute("data-area")
+  if (currentChangeArea == areaArray.length - 1) {
+    previousChangeArea()
+    nextChangeArea()
+  } else {
+    nextChangeArea()
+    previousChangeArea()
+  }
+}
+function checkForUnlockedAreas() {
+  areaArray.forEach((element) => {
+    let requirementAmount = Areas[element].requirementAmount
+    switch (Areas[element].requirementType) {
+      case "free": unlockArea(element); break;
+      case "pet_score":
+        if (player.pet_score >= requirementAmount) {
+          unlockArea(element)
+        }; break;
+      case "shiny_score":
+        // NO SHINY SKINS YET
+        break;
+      case "metallic_score":
+        // NO METALLIC SKINS YET
+        break;
+      default: console.error("Incorrect requirement type (idk how???)")
+    }
+  })
+
+  setTimeout(checkForUnlockedAreas, 2500)
+}
+checkForUnlockedAreas()
+
+function unlockEgg(rarity) {
+  let eggButtonElement = document.querySelector(`#${rarity.toLowerCase()}Egg`)
+  if (!eggButtonElement.classList.contains("locked-egg-button")) {
+    return
+  }
+  eggButtonElement.classList.remove("locked-egg-button")
+}
+function checkForUnlockedEggs() {
+  for (let i = 0; i < eggButtons.length; i++) {
+    let requiredArea = eggButtons[i].getAttribute("data-requirement")
+    if (!requiredArea) {
+      continue
+    }
+    let eggRarity = String(eggButtons[i].id).replace("Egg", "")
+    eggRarity = eggRarity.charAt(0).toUpperCase() + eggRarity.slice(1)
+    requiredArea = requiredArea.replace("Locked, Requirement: ", "")
+
+    if (player.unlocked_areas.includes(requiredArea)) {
+      unlockEgg(eggRarity)
+    }
+  }
+  setTimeout(checkForUnlockedEggs, 5000)
+}
+checkForUnlockedEggs()
+
+function hideElementsDisplay(className) {
+  let elements = document.querySelectorAll(`.${className}`)
+  for (let i = 0; i < elements.length; i++) {
+    elements[i].style.display = "none"
+  }
+}
+function showElementsDisplay(className) {
+  let elements = document.querySelectorAll(`.${className}`)
+  for (let i = 0; i < elements.length; i++) {
+    elements[i].style.display = "unset"
+  }
+}
+function toggleFilterPetInventoryMenu() {
+  const filterPetInventoryMenu = document.querySelector("#filterPetInventoryMenu")
+  if (filterPetInventoryMenu.style.display == "none") {
+    filterPetInventoryMenu.style.display = "unset"
+  } else if (filterPetInventoryMenu.style.display == "unset") {
+    filterPetInventoryMenu.style.display = "none"
+  }
+}
+document.querySelector("#filterPetInventoryButton").addEventListener("click", toggleFilterPetInventoryMenu)
+
+function filterPetInventory() {
+  if (document.querySelector("#showCommonPets").checked) {
+    showElementsDisplay("common-pet")
+  } else {
+    hideElementsDisplay("common-pet")
+  }
+  if (document.querySelector("#showUncommonPets").checked) {
+    showElementsDisplay("uncommon-pet")
+  } else {
+    hideElementsDisplay("uncommon-pet")
+  }
+  if (document.querySelector("#showRarePets").checked) {
+    showElementsDisplay("rare-pet")
+  } else {
+    hideElementsDisplay("rare-pet")
+  }
+  if (document.querySelector("#showEpicPets").checked) {
+    showElementsDisplay("epic-pet")
+  } else {
+    hideElementsDisplay("epic-pet")
+  }
+  if (document.querySelector("#showLegendaryPets").checked) {
+    showElementsDisplay("legendary-pet")
+  } else {
+    hideElementsDisplay("legendary-pet")
+  }
+
+  if (document.querySelector("#showEquippedPets").checked) {
+    showElementsDisplay("pet-element-equipped")
+  } else {
+    hideElementsDisplay("pet-element-equipped")
+  }
+}
+
+function createMergePetElement(pet) {
+
+}
+
+let mergeSlots = document.querySelectorAll(".merge-point")
+function removePetFromMerge(pet) {
+  console.log("merge")
+}
+function clearMergeSlots() {
+
+}
+function addPetToMerge(pet) {
+  if (pet["inMerge"] == true) {
+    removePetFromMerge(pet)
+    return
+  }
+  let availableMergeSlot = null;
+  for (let i = 0; i < mergeSlots.length; i++) {
+    let mergeSlotID = mergeSlots[i].id.replace("mergePoint", "")
+    if (mergeSlots[i].classList.contains("hidden-merge-point") == false) {
+      availableMergeSlot = mergeSlotID
+      break
+    }
+  }
+  if (availableMergeSlot == null) {
+    console.log("Can't fit more in merge")
+    return
+  }
+
+  pet["equipped"] = true
+  let mergePetElement = createMergePetElement(pet)
+  let petSlotElement = document.getElementById(`petSlot${availablePetSlot}`)
+  let petElement = document.querySelector(`[data-petid="${pet["id"]}"`)
+  petElement.classList.add("pet-element-equipped")
+  let playerPetSlot = player["equipped_pets"][availablePetSlot]
+  playerPetSlot["pet"] = pet
+  petSlotElement.appendChild(equippedPetElement)
+  autoTargetCrystals()
+}
+function clickPetElement(pet) {
+  switch (petInventoryMode) {
+    case "equip":
+      equipPet(pet);
+      break;
+    case "merge":
+      addPetToMerge(pet);
+      break;
+    default: console.log("Invalid Pet Inventory Mode. Aborting event.")
+  }
+}

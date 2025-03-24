@@ -28,33 +28,33 @@ Areas.Meadow.setRequirement("free", 0);
 Areas.Meadow.setSurfaceImage("assets/resources/meadow_grass.png")
 
 Areas.Forest = new Area(2, "Forest", 18);
-Areas.Forest.setRequirement("petScore", 15);
+Areas.Forest.setRequirement("pet_score", 15);
 Areas.Forest.setSurfaceImage("assets/resources/forest_grass.png")
 
 Areas.Desert = new Area(3, "Desert", 16);
-Areas.Desert.setRequirement("petScore", 40);
+Areas.Desert.setRequirement("pet_score", 40);
 Areas.Desert.setSurfaceImage("assets/resources/desert_sand.png")
 
 Areas.Arctic = new Area(4, "Arctic", 15);
-Areas.Arctic.setRequirement("petScore", 75);
+Areas.Arctic.setRequirement("pet_score", 75);
 
 Areas.Beach = new Area(5, "Beach", 16);
-Areas.Beach.setRequirement("petScore", 120);
+Areas.Beach.setRequirement("pet_score", 120);
 
 Areas.Mountains = new Area(6, "Mountains", 14);
-Areas.Mountains.setRequirement("petScore", 175);
+Areas.Mountains.setRequirement("pet_score", 175);
 
 Areas.Jungle = new Area(7, "Jungle", 22);
-Areas.Jungle.setRequirement("petScore", 210);
+Areas.Jungle.setRequirement("pet_score", 210);
 
 Areas.Grotto = new Area(8, "Grotto", 32);
-Areas.Grotto.setRequirement("shinyScore", 100);
+Areas.Grotto.setRequirement("shiny_score", 100);
 
 Areas.Grove = new Area(9, "Grove", 20);
-Areas.Grove.setRequirement("shinyScore", 1000);
+Areas.Grove.setRequirement("shiny_score", 1000);
 
 Areas.Mine = new Area(10, "Mine", 16);
-Areas.Mine.setRequirement("metallicScore", 100);
+Areas.Mine.setRequirement("metallic_score", 100);
 
 function generateCrystalObject(specifiedArea) {
   if (!(specifiedArea in Areas)) {

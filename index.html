@@ -33,6 +33,32 @@
                     <div id="petInventoryLeft">
                         <div id="petInventoryTopBar">
                             <div id="filterPetInventoryButton"><h5 class="fredoka white-text gray-text-outline">Filter</h5></div>
+                            <div id="filterPetInventoryMenu" style="display: none;">
+                                <div class="filter-pet-inventory-checkbox-container" id="showEquippedPetsContainer" style="margin-bottom: 0.5rem;">
+                                    <input type="checkbox" class="filter-pet-inventory-checkbox" id="showEquippedPets" checked>
+                                    <label for="showEquippedPets" class="fredoka white-text gray-text-outline">Equipped</label>
+                                </div>
+                                <div class="filter-pet-inventory-checkbox-container" id="showCommonPetsContainer">
+                                    <input type="checkbox" class="filter-pet-inventory-checkbox" id="showCommonPets" checked>
+                                    <label for="showCommonPets" class="fredoka common-text common-text-outline">Common</label>
+                                </div>
+                                <div class="filter-pet-inventory-checkbox-container" id="showUncommonPetsContainer">
+                                    <input type="checkbox" class="filter-pet-inventory-checkbox" id="showUncommonPets" checked>
+                                    <label for="showUncommonPets" class="fredoka uncommon-text uncommon-text-outline">Uncommon</label>
+                                </div>
+                                <div class="filter-pet-inventory-checkbox-container" id="showRarePetsContainer">
+                                    <input type="checkbox" class="filter-pet-inventory-checkbox" id="showRarePets" checked>
+                                    <label for="showRarePets" class="fredoka rare-text rare-text-outline">Rare</label>
+                                </div>
+                                <div class="filter-pet-inventory-checkbox-container" id="showEpicPetsContainer">
+                                    <input type="checkbox" class="filter-pet-inventory-checkbox" id="showEpicPets" checked>
+                                    <label for="showEpicPets" class="fredoka epic-text epic-text-outline">Epic</label>
+                                </div>
+                                <div class="filter-pet-inventory-checkbox-container" id="showLegendaryPetsContainer">
+                                    <input type="checkbox" class="filter-pet-inventory-checkbox" id="showLegendaryPets" checked>
+                                    <label for="showLegendaryPets" class="fredoka legendary-text legendary-text-outline">Legendary</label>
+                                </div>
+                            </div>
                             <div id="petsShown"><h6 class="fredoka white-text gray-text-outline">0 / 0 pets shown</h6></div>
                         </div>
                         <div id="petInventory"></div>
@@ -83,7 +109,41 @@
                             </div>
                         </div>
                         <div id="mergeTab" style="display: none;">
-                            <h1 class="fredoka dark-gray-text">not available yet</h1>
+                            <h2 class="fredoka white-text common-text-outline" id="mergeTabHeading">Select a pet to fuse</h2>
+                            <div id="mergeArea">
+                                <div class="merge-point" id="mergePoint1">
+                                    <div class="merge-point-content">
+                                        <h3 class="fredoka common-pet-rarity" style="font-size: 1rem;">Empty</h3>
+                                    </div>
+                                </div>
+                                <div class="merge-point" id="mergePoint2">
+                                    <div class="merge-point-content">
+                                        <h3 class="fredoka common-pet-rarity" style="font-size: 1rem;">Empty</h3>
+                                    </div>
+                                </div>
+                                <div class="merge-point" id="mergePoint3">
+                                    <div class="merge-point-content">
+                                        <h3 class="fredoka common-pet-rarity" style="font-size: 1rem;">Empty</h3>
+                                    </div>
+                                </div>
+                                <div class="merge-point" id="mergePoint4">
+                                    <div class="merge-point-content">
+                                        <h3 class="fredoka common-pet-rarity" style="font-size: 1rem;">Empty</h3>
+                                    </div>
+                                </div>
+                                <div class="merge-point" id="mergePoint5">
+                                    <div class="merge-point-content">
+                                        <h3 class="fredoka common-pet-rarity" style="font-size: 1rem;">Empty</h3>
+                                    </div>
+                                </div>
+                                <div id="mergeCenter">
+                                    <div class="merge-point-content">
+                                        <h3 class="fredoka common-pet-rarity" style="font-size: 1rem;">
+                                            <div>Select</div><div>a pet to</div><div>merge</div>
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -109,6 +169,40 @@
                     </div>
                 </div>
             </section>
+            <section id="indexTab" style="display: none;">
+                <h1 class="fredoka white-text black-text-outline" style="margin-bottom: 0.25rem;">Index</h1>
+                <div id="petIndexContainer">
+                    <div id="petIndexAside">
+                        <img id="petScoreIcon" src="assets/resources/pet_score.svg" alt="Pet Score">
+                        <div id="petScoreNumber" class="fredoka pet-score-text black-text-outline">0</div>
+                        <h4 id="petsDiscoveredHeading" class="fredoka white-text black-text-outline">Pets Discovered</h4>
+                        <h3 id="petsDiscovered" class="fredoka white-text gray-text-outline">0</h3>
+                        <h4 id="mythicalPetsCollectedHeading" class="fredoka white-text black-text-outline">Mythical Pets Collected</h4>
+                        <h3 id="mythicalPetsCollected" class="fredoka white-text gray-text-outline">0</h3>
+                    </div>
+                    <div id="petIndexMain">
+                        <div id="petIndexTabChooser">
+                            <div id="normalPetIndexTabButton" class="pet-index-tab-button pet-index-tab-button-active" data-href="normalPetIndexTab">
+                                <h6 class="fredoka white-text gray-text-outline">Normal</h6>
+                            </div>
+                            <div id="shinyPetIndexTabButton" class="pet-index-tab-button" data-href="shinyPetIndexTab">
+                                <h6 class="fredoka white-text gray-text-outline">Shiny</h6>
+                            </div>
+                        </div>
+                        <div id="normalPetIndexTab" class="active-pet-index-tab">
+                            <div id="normalPetIndex"></div>
+                            <div id="normalPetIndexInfo">
+                                <h6 class="fredoka pet-score-text gray-text-outline">Pet Score</h6>
+                                <h6 class="fredoka white-text gray-text-outline"> = </h6>
+                                <h6 class="fredoka white-text gray-text-outline">Pets Discovered + Mythical Pets Collected</h6>
+                            </div>
+                        </div>
+                        <div id="shinyPetIndexTab" style="display: none;">
+                            <h1 class="fredoka dark-gray-text">no shiny pets yet</h1>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </main>
         <aside>
             <section id="resourceDisplay">
@@ -126,6 +220,9 @@
                 </div>
                 <div class="navigation-button" id="navigationInventory" data-href="inventoryTab">
                     <h1 class="fredoka white-text black-text-outline">Inventory</h1>
+                </div>
+                <div class="navigation-button" id="navigationIndex" data-href="indexTab">
+                    <h1 class="fredoka white-text black-text-outline">Pet Index</h1>
                 </div>
             </section>
         </aside>
